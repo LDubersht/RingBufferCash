@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,26 @@ namespace RingBufferCash
     {
         static void Main(string[] args)
         {
-            var scache = new CircularBufferCache<string, string>(3);
+            Stopwatch stopwatch = new Stopwatch();
+            int cnt = 1000000;            var scache = new CircularBufferCache<string, string>(3);
             Console.WriteLine("<string, string>");
-            Console.WriteLine(scache.Get("key1"));
-            Console.WriteLine(scache.Get("key2"));
-            Console.WriteLine(scache.Get("key3"));
-            Console.ReadLine();
+            stopwatch.Start();
+            for (int i = 0; i < cnt; i++)
+            {
+                var result = scache.Get("key"+i.ToString()); 
+            }
+            stopwatch.Stop();
+            Console.WriteLine("count: "+ cnt+ " Exec time: " + +stopwatch.ElapsedMilliseconds);
 
             var icache = new CircularBufferCache<int, int>(3);
-            Console.WriteLine("<int, int>");
-            Console.WriteLine(icache.Get(1));
-            Console.WriteLine(icache.Get(7));
-            Console.WriteLine(icache.Get(19));
+            stopwatch.Restart();
+            for (int i = 0; i < cnt; i++)
+            {
+                var result = icache.Get(i);
+            }
+            stopwatch.Stop();
+            Console.WriteLine("count: " + cnt + " Exec time: " + +stopwatch.ElapsedMilliseconds);
+
             Console.ReadLine();
 
         }
