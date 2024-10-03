@@ -43,14 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CashItem.cs" />
-    <Compile Include="DataSource.cs" />
-    <Compile Include="CircularBufferCache.cs" />
+    <Compile Include="Interfaces\ICircularBufferCache.cs" />
+    <Compile Include="Realisations\CashItem.cs" />
+    <Compile Include="Utils\DataSource.cs" />
+    <Compile Include="Realisations\CircularBufferCache.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\GenerateWords.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

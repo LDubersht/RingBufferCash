@@ -12,24 +12,30 @@ namespace RingBufferCash
         static void Main(string[] args)
         {
             Stopwatch stopwatch = new Stopwatch();
-            int cnt = 1000000;            var scache = new CircularBufferCache<string, string>(3);
+            int loopCNT = 1000; 
+            int cashCNT = 100; //we can change cash cize
+            int divCNT = 100;
+            var scache = new CircularBufferCache<string, string>(cashCNT);
+            var r = scache.Get("key");
             Console.WriteLine("<string, string>");
             stopwatch.Start();
-            for (int i = 0; i < cnt; i++)
+            for (int i = 0; i < loopCNT; i++)
             {
-                var result = scache.Get("key"+i.ToString()); 
+                scache.Get("key" + (i % divCNT).ToString());
+                //var result = DataSource<string, string>.GetValue("key" + (i % divCNT).ToString());
             }
             stopwatch.Stop();
-            Console.WriteLine("count: "+ cnt+ " Exec time: " + +stopwatch.ElapsedMilliseconds);
+            Console.WriteLine($"loopCNT: {loopCNT} cashCNT: {cashCNT} divCNT {divCNT} Exec time: {stopwatch.ElapsedMilliseconds}");
 
-            var icache = new CircularBufferCache<int, int>(3);
+            var icache = new CircularBufferCache<int, int>(cashCNT);
+            Console.WriteLine("<int, int>");
             stopwatch.Restart();
-            for (int i = 0; i < cnt; i++)
+            for (int i = 0; i < loopCNT; i++)
             {
-                var result = icache.Get(i);
+                var result = icache.Get(i % divCNT);
             }
             stopwatch.Stop();
-            Console.WriteLine("count: " + cnt + " Exec time: " + +stopwatch.ElapsedMilliseconds);
+            Console.WriteLine($"loopCNT: {loopCNT} cashCNT: {cashCNT} divCNT {divCNT} Exec time: {stopwatch.ElapsedMilliseconds}");
 
             Console.ReadLine();
 

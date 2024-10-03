@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using RingBufferCash;
+using TestExample.Interfaces;
+
+
 namespace RingBufferCash
 {
-    public class CircularBufferCache<TKey, TValue>
+    public class CircularBufferCache<TKey, TValue>: ICircularBufferCache<TKey, TValue>
     {
         private readonly Dictionary<TKey, CashItem<TValue>> _keyIndexMap;
         private readonly int _capacity;
@@ -23,12 +26,12 @@ namespace RingBufferCash
             }
             else //not in cash
             {
-                TValue ItemValue = DataSource<TKey, TValue>.GetValue(key);
-                CashItem<TValue> item = new CashItem<TValue>();
-                { item.ItemValue = ItemValue; item.LastAccessTime = DateTime.Now; }
+                TValue ItemValue = DataSource<TKey, TValue>.GetValue(key); //get from data source
+                CashItem<TValue> item = new CashItem<TValue>(ItemValue);
                 if (_keyIndexMap.Count == _capacity)
                 {
-                    TKey LastKey = _keyIndexMap.Aggregate((x, y) => x.Value.LastAccessTime.CompareTo(y.Value.LastAccessTime) < 0 ? x : y).Key;
+                    //TKey LastKey = _keyIndexMap.Aggregate((x, y) => x.Value.LastAccessTime.CompareTo(y.Value.LastAccessTime) < 0 ? x : y).Key;
+                    TKey LastKey = _keyIndexMap.OrderBy(entry => entry.Value.LastAccessTime).LastOrDefault().Key;
                     _keyIndexMap.Remove(LastKey);
                 }
                 _keyIndexMap.Add(key, item);
