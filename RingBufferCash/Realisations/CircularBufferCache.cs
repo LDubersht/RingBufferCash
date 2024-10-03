@@ -30,7 +30,6 @@ namespace RingBufferCash
                 CashItem<TValue> item = new CashItem<TValue>(ItemValue);
                 if (_keyIndexMap.Count == _capacity)
                 {
-                    //TKey LastKey = _keyIndexMap.Aggregate((x, y) => x.Value.LastAccessTime.CompareTo(y.Value.LastAccessTime) < 0 ? x : y).Key;
                     TKey LastKey = _keyIndexMap.OrderBy(entry => entry.Value.LastAccessTime).LastOrDefault().Key;
                     _keyIndexMap.Remove(LastKey);
                 }
