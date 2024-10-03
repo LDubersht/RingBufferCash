@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RingBufferCash
 {
@@ -12,7 +8,7 @@ namespace RingBufferCash
         static void Main(string[] args)
         {
             Stopwatch stopwatch = new Stopwatch();
-            int loopCNT = 1000; //count test calls
+            int loopCNT = 10000; //count test calls
             int cashCNT = 100; //we can change cash cize
             int divCNT = 100;
             
